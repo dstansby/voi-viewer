@@ -77,37 +77,31 @@ function App() {
       // Set up volume
       const volActor = vtkVolume.newInstance();
       const volMapper = vtkVolumeMapper.newInstance();
-      volActor.setMapper(volMapper);
-      // Set rendering properties
-      const opacity = makeLinearFunc();
-      volActor.getProperty().setScalarOpacity(0, opacity);
-      volActor.getProperty().setInterpolationTypeToLinear();
-      volActor.getProperty().setGradientOpacityMinimumValue(0, 0);
-      volActor.getProperty().setGradientOpacityMaximumValue(0, 256 * 0.05);
-      volActor.getProperty().setShade(false);
-      volActor.getProperty().setUseGradientOpacity(0, true);
+      const reader = vtkXMLImageDataReader.newInstance();
+      volMapper.setInputConnection(reader.getOutputPort());
 
-      const dataRange = 256;
-      const gradOpac = 0.9;
-      const minV = (gradOpac - 0.5) / 0.7;
-      volActor
-        .getProperty()
-        .setGradientOpacityMinimumValue(0, dataRange * 0.4 * minV * minV);
-      volActor
-        .getProperty()
-        .setGradientOpacityMaximumValue(0, dataRange * gradOpac * gradOpac);
-      volActor.getProperty().setGradientOpacityMinimumOpacity(0, 0.0);
-      volActor.getProperty().setGradientOpacityMaximumOpacity(0, 1.0);
-      volActor.getProperty().setAmbient(0.2);
-      volActor.getProperty().setDiffuse(0.7);
-      volActor.getProperty().setSpecular(0.3);
-      volActor.getProperty().setSpecularPower(8.0);
+      volMapper.setBlendModeToComposite();
+      volActor.setMapper(volMapper);
+      const volProp = volActor.getProperty();
+      // Set rendering properties
+      volProp.setUseGradientOpacity(0, true);
+      volProp.setGradientOpacityMinimumValue(0, 32);
+      volProp.setGradientOpacityMaximumValue(0, 64.0);
+      volProp.setGradientOpacityMinimumOpacity(0, 0.0);
+      volProp.setGradientOpacityMaximumOpacity(0, 1.0);
+      volProp.setShade(true);
+      volProp.setAmbient(0.2);
+      volProp.setDiffuse(0.7);
+      volProp.setSpecular(0.3);
+      volProp.setSpecularPower(8.0);
+
+      const opacity = makeLinearFunc();
+      volProp.setScalarOpacity(0, opacity);
+      volProp.setInterpolationTypeToFastLinear();
+
       const preset = vtkColorMaps.getPresetByName("Grayscale");
       const lookupTable = volActor.getProperty().getRGBTransferFunction(0);
       lookupTable.applyColorMap(preset);
-
-      const reader = vtkXMLImageDataReader.newInstance();
-      volMapper.setInputConnection(reader.getOutputPort());
 
       reader
         .setUrl(heart)

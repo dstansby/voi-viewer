@@ -19,7 +19,7 @@ function makeCylinder(
   const actor = vtkActor.newInstance();
   actor.setMapper(mapper);
 
-  actor.getProperty().setOpacity(0.8);
+  actor.getProperty().setOpacity(0.4);
   actor.getProperty().setColor(236 / 255, 80 / 255, 85 / 255);
 
   return actor;
