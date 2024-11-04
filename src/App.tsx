@@ -22,8 +22,7 @@ function App() {
   useEffect(() => {
     if (!context.current) {
       const fullScreenRenderer = vtkFullScreenRenderWindow.newInstance({
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        //rootContainer: vtkContainerRef.current, // @ts-ignore
+        background: [0, 0, 0],
       });
 
       // Get renderer
