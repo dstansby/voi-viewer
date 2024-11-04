@@ -3,7 +3,7 @@ import vtkPiecewiseFunction from "@kitware/vtk.js/Common/DataModel/PiecewiseFunc
 function makeLinearFunc() {
   const start = 100;
   const end = 255;
-  const height = 1;
+  const height = 0.5;
 
   const range = end - start;
   const nsamples = 32;
