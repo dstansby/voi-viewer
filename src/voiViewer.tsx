@@ -15,7 +15,7 @@ import heart from "./volumeData/heart.vti?url";
 import { makeCylinder } from "./cylinder";
 import vtkColorMaps from "@kitware/vtk.js/Rendering/Core/ColorTransferFunction/ColorMaps";
 
-function App() {
+function VoiViewer() {
   const vtkContainerRef = useRef(null);
   const context = useRef(null);
 
@@ -134,4 +134,4 @@ function App() {
   );
 }
 
-export default App;
+export default VoiViewer;
